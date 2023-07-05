@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContactsAPI.Models;
+using ContactsAPI.Models.DTO;
+using ContactsAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,38 +12,34 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContactsAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class ContactController : Controller
+    public class ContactController : ControllerBase
     {
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IContactService _contactService;
+
+        public ContactController(IContactService contactService)
         {
-            return new string[] { "value1", "value2" };
+            _contactService = contactService;
         }
 
+        // GET: api/<controller>
+        [HttpGet]
+        public IEnumerable<Contact> GetAll() => _contactService.GetContacts();
+
+
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        [HttpGet("{Id}")]
+        public Contact Get(Guid Id) => _contactService.GetContact(Id);
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
+        public void Post([FromBody] ContactDTO newContact) => _contactService.AddContact(newContact);
 
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        [HttpPut("{Id}")]
+        public void Put(Guid Id, [FromBody] ContactDTO newContact) => _contactService.UpdateContact(Id,newContact);
 
         // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        [HttpDelete("{Id}")]
+        public void Delete(Guid Id) => _contactService.DeleteContact(Id);
     }
 }
