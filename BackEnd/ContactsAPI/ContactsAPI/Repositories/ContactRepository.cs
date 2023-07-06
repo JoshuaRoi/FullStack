@@ -30,11 +30,10 @@ namespace ContactsAPI.Repositories
                 await _db.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
-
         }
 
         public async Task<bool> Update(Guid Id, ContactDTO newContact)
@@ -56,7 +55,7 @@ namespace ContactsAPI.Repositories
 
                 return true;
             }
-            catch(Exception ex)
+            catch
             {
                 return false;
             }
@@ -74,8 +73,7 @@ namespace ContactsAPI.Repositories
                 }
                 return true;
             }
-            catch (Exception ex)
-            {
+            catch {
                 return false;
             }
           
