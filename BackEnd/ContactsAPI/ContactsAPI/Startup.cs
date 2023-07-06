@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace ContactsAPI
@@ -26,7 +27,7 @@ namespace ContactsAPI
             services.AddDbContext<Context>();
             services.AddTransient<IContactRepository, ContactRepository>();
             services.AddTransient<IContactService, ContactService>();
-
+            services.AddCors();
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -55,6 +56,10 @@ namespace ContactsAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(
+                options => options.WithOrigins("*").AllowAnyMethod()
+            );
+
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
@@ -77,6 +82,7 @@ namespace ContactsAPI
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

@@ -1,0 +1,13 @@
+[
+    {
+        "id": "858d9825-dc2b-472b-b4e1-2eaf467239f8",
+        "firstName": "string",
+        "lastName": "string",
+        "nickName": "string",
+        "isFavorite": true,
+        "mobileNumber": "string",
+        "address": "string",
+        "email": "string",
+        "company": "string"
+    }
+]
